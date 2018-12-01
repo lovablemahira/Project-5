@@ -161,7 +161,8 @@ public class Package {
     public String shippingLabel() {
         return "====================\n" +
                 "TO: " + destination.getName() + "\n" +
-                String.format("%s, %s, %d\n", destination.getCity(), destination.getState(), destination.getZipCode()) +
+                destination.getAddress() + "\n" +
+                String.format("%s, %s, %05d\n", destination.getCity(), destination.getState(), destination.getZipCode()) +
                 String.format("Weight:\t%.2f\n", weight) +
                 String.format("Price:\t$%.2f\n", price) +
                 "Product: " + product + "\n" +
