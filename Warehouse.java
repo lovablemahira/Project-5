@@ -13,14 +13,14 @@ public class Warehouse {
     final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
     final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
     final static double PRIME_DAY_DISCOUNT = .15;
-    final static String menu = "==========Options==========" +
-                                "\n1) Add Package" +
-                                "\n2) Add Vehicle" +
-                                "\n3) Activate Prime Day" +
-                                "\n4) Send Vehicle" +
-                                "\n5) Print Statistics" +
-                                "\n6) Exit" +
-                                "\n===========================";
+    static String menu = "==========Options==========" +
+                    "\n1) Add Package" +
+                    "\n2) Add Vehicle" +
+                    "\n3) Activate Prime Day" +
+                    "\n4) Send Vehicle" +
+                    "\n5) Print Statistics" +
+                    "\n6) Exit" +
+                    "\n===========================";
 
     /**
      * Main Method
@@ -30,7 +30,6 @@ public class Warehouse {
     public static void main(String[] args) {
         //Variables\\
         Scanner userInput = new Scanner(System.in);
-        String selection = "1";
     	//TODO
     	
     	//1) load data (vehicle, packages, profits, packages shipped and primeday) from files using DatabaseManager
@@ -38,9 +37,10 @@ public class Warehouse {
     	
     	
     	//2) Show menu and handle user inputs
+        System.out.println(menu);
+        String selection = userInput.nextLine();
+
         while (selection != "6") {
-            System.out.println(menu);
-            selection = userInput.nextLine();
             switch (selection) {
                 case "1":
                     //Variables\\
@@ -59,7 +59,7 @@ public class Warehouse {
                     id  = userInput.nextLine();
                     System.out.println("Enter Product Name:");
                     name = userInput.nextLine();
-                    //May have to handle errors
+                    //---------------------------------May have to handle errors
                     System.out.println("Enter Weight:");
                     weight = userInput.nextDouble();
                     System.out.println("Enter Price:");
@@ -75,25 +75,150 @@ public class Warehouse {
                     state = userInput.nextLine();
                     System.out.println("Enter ZIP Code:");
                     zipCode = userInput.nextInt();
+                    userInput.nextLine();
                     ShippingAddress shippingAddress = new ShippingAddress(buyerName, address, city, state, zipCode);
                     Package boxPackage = new Package(id, name, weight, price, shippingAddress);
                     String label = boxPackage.shippingLabel();
                     System.out.println(label);
                     break;
                 case "2":
+                    System.out.println("Vehicle Options:");
+                    System.out.println("1) Truck");
+                    System.out.println("2) Drone");
+                    System.out.println("3) Cargo Plane");
+                    String vehicle = userInput.nextLine();
+                    System.out.println("Enter License Plate No.:");
+                    //---------------------------------May have to handle errors
+                    String license = userInput.nextLine();
+                    System.out.println("Enter Maximum Carry Weight:");
+                    double maxWeight = userInput.nextDouble();
+                    userInput.nextLine();
+
+                    switch (vehicle) {
+                        case "1":
+                            break;
+                        case "2":
+                            break;
+                        case "3":
+                            break;
+                        default:
+                            //---------------------------------May have to handle errors
+                            System.out.println("Sorry, not an option.");
+                    }
                     break;
                 case "3":
+                    if (menu == ("==========Options==========" +
+                        "\n1) Add Package" +
+                        "\n2) Add Vehicle" +
+                        "\n3) Deactivate Prime Day" +
+                        "\n4) Send Vehicle" +
+                        "\n5) Print Statistics" +
+                        "\n6) Exit" +
+                        "\n===========================")) {
+                        menu = "==========Options==========" +
+                                "\n1) Add Package" +
+                                "\n2) Add Vehicle" +
+                                "\n3) Activate Prime Day" +
+                                "\n4) Send Vehicle" +
+                                "\n5) Print Statistics" +
+                                "\n6) Exit" +
+                                "\n===========================";
+                    } else {
+                        menu = "==========Options==========" +
+                                "\n1) Add Package" +
+                                "\n2) Add Vehicle" +
+                                "\n3) Deactivate Prime Day" +
+                                "\n4) Send Vehicle" +
+                                "\n5) Print Statistics" +
+                                "\n6) Exit" +
+                                "\n===========================";
+                    }
+                    //---------------------------------NOT DONE, NEED TO UPDATE ALL PRICES
                     break;
                 case "4":
+                    System.out.println("Options:");
+                    System.out.println("1) Send Truck");
+                    System.out.println("2) Send Drone");
+                    System.out.println("3) Send Cargo Plane");
+                    System.out.println("4) Send First Available");
+                    String sendVehicle = userInput.nextLine();
+                    String zipcodeOption;
+
+                    switch (sendVehicle) {
+                        case "1":
+                            System.out.println("ZIP Code Options:");
+                            System.out.println("1) Send to first ZIP Code");
+                            System.out.println("2) Send to mode of ZIP Codes");
+                            zipcodeOption = userInput.nextLine();
+
+                            switch (zipcodeOption) {
+                                case "1":
+                                    break;
+                                case "2":
+                                    break;
+                                default:
+                                    System.out.println("Sorry, that's not an option.");
+                                    break;
+                            }
+                            break;
+                        case "2":
+                            System.out.println("ZIP Code Options:");
+                            System.out.println("1) Send to first ZIP Code");
+                            System.out.println("2) Send to mode of ZIP Codes");
+                            zipcodeOption = userInput.nextLine();
+
+                            switch (zipcodeOption) {
+                                case "1":
+                                    break;
+                                case "2":
+                                    break;
+                                default:
+                                    System.out.println("Sorry, that's not an option.");
+                                    break;
+                            }
+                            break;
+                        case "3":
+                            System.out.println("ZIP Code Options:");
+                            System.out.println("1) Send to first ZIP Code");
+                            System.out.println("2) Send to mode of ZIP Codes");
+                            zipcodeOption = userInput.nextLine();
+
+                            switch (zipcodeOption) {
+                                case "1":
+                                    break;
+                                case "2":
+                                    break;
+                                default:
+                                    System.out.println("Sorry, that's not an option.");
+                                    break;
+                            }
+                            break;
+                        default:
+                            //---------------------------------May have to handle errors
+                            System.out.println("Error: No vehicles of selected type are available.");
+                    }
                     break;
                 case "5":
+                    System.out.println("==========Statistics==========");
+                    System.out.println("Profits:");
+                    System.out.println("Packages Shipped:");
+                    System.out.println("Packages in Warehouse:");
+                    System.out.println("==============================");
                     break;
                 case "6":
+                    DatabaseManager dm = new DatabaseManager();
+//                    dm.savePackages();
+//                    dm.saveVehicles();
+//                    dm.saveProfit();
+//                    dm.savePackagesShipped();
+//                    dm.savePrimeDay();
                     return;
                 default:
                     System.out.println("Error: Option not available.");
                     break;
             }
+            System.out.println(menu);
+            selection = userInput.nextLine();
         }
 
         //3) save data (vehicle, packages, profits, packages shipped and primeday) to files (overwriting them) using DatabaseManager
