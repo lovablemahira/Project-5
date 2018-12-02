@@ -6,6 +6,7 @@ import java.util.ArrayList;
  */
 public class CargoPlane extends Vehicle {
     final double GAS_RATE = 2.33;
+    private int range = 0;
 
     /**
      * Default Constructor
@@ -40,8 +41,28 @@ public class CargoPlane extends Vehicle {
      */
     @Override
     public void fill(ArrayList<Package> warehousePackages) {
-    	//TODO
-        
+        int increment = 0;
+        double currentWeight = getCurrentWeight();
+        double maxWeight = getMaxWeight();
+        while (warehousePackages.size() != 0 && currentWeight < maxWeight) {
+            int amountThatCanFit = 0;
+            for (int i = 0; i < warehousePackages.size(); i++) {
+                if (currentWeight + warehousePackages.get(i).getWeight() <= maxWeight) {
+                    amountThatCanFit++;
+                    if (Math.abs(warehousePackages.get(i).getDestination().getZipCode() - getZipDest()) <= increment) {
+                        currentWeight += warehousePackages.get(i).getWeight();
+                        addPackage(warehousePackages.get(i));
+                        warehousePackages.remove(i);
+                        i--;
+                    }
+                }
+            }
+            if (warehousePackages.size() == 0 || amountThatCanFit == 0) {
+                break;
+            }
+            increment += 10;
+        }
+        range = increment;
     }
 
     /*
@@ -58,8 +79,11 @@ public class CargoPlane extends Vehicle {
      */
     @Override
     public double getProfit() {
-    	//TODO
-        
+        double revenue = 0.0;
+        for (Package pkg : getPackages()) {
+            revenue += pkg.getPrice();
+        }
+        return revenue - range * GAS_RATE;
     }
 
     /**
@@ -76,8 +100,17 @@ public class CargoPlane extends Vehicle {
      */
     @Override
     public String report() {
-    	//TODO
-       
+        String report = "==========Cargo Plane Report==========\n" +
+                "License Plate No.: " + getLicensePlate() + "\n" +
+                "Destination: " + getZipDest() + "\n" +
+                String.format("Weight Load: %.2f/%.2f\n", getCurrentWeight(), getMaxWeight()) +
+                String.format("Net Profit: $%.2f\n", this.getProfit()) +
+                "=====Shipping Labels=====\n";
+        for (Package pkg : getPackages()) {
+            report += pkg.shippingLabel();
+        }
+        report += "==============================\n";
+        return report;
     }
 
    

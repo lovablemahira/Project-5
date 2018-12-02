@@ -10,6 +10,7 @@ public class Vehicle implements Profitable {
     private double currentWeight;
     private int zipDest;
     private ArrayList<Package> packages;
+    private int range;
 
 
     /**
@@ -23,6 +24,7 @@ public class Vehicle implements Profitable {
         currentWeight = 0.0;
         zipDest = 0;
         packages = new ArrayList<>();
+        range = 0;
     }
     
     //============================================================================
@@ -46,6 +48,7 @@ public class Vehicle implements Profitable {
         currentWeight = 0.0;
         zipDest = 0;
         packages = new ArrayList<>();
+        range = 0;
     }
     
     //============================================================================
@@ -236,9 +239,11 @@ public class Vehicle implements Profitable {
     public void fill(ArrayList<Package> warehousePackages) {
         int increment = 0;
         while (warehousePackages.size() != 0 && currentWeight < maxWeight) {
+            int amountThatCanFit = 0;
             for (int i = 0; i < warehousePackages.size(); i++) {
-                if (Math.abs(warehousePackages.get(i).getDestination().getZipCode() - zipDest) == increment) {
-                    if (currentWeight + warehousePackages.get(i).getWeight() <= maxWeight) {
+                if (currentWeight + warehousePackages.get(i).getWeight() <= maxWeight) {
+                    amountThatCanFit++;
+                    if (Math.abs(warehousePackages.get(i).getDestination().getZipCode() - zipDest) == increment) {
                         currentWeight += warehousePackages.get(i).getWeight();
                         packages.add(warehousePackages.get(i));
                         warehousePackages.remove(i);
@@ -246,8 +251,12 @@ public class Vehicle implements Profitable {
                     }
                 }
             }
+            if (warehousePackages.size() == 0 || amountThatCanFit == 0) {
+                break;
+            }
             increment++;
         }
+        range = increment;
     }
 
     @Override
@@ -262,5 +271,9 @@ public class Vehicle implements Profitable {
     @Override
     public String report() {
         return null;
+    }
+
+    public int getRange() {
+        return range;
     }
 }

@@ -163,8 +163,8 @@ public class Package {
                 "TO: " + destination.getName() + "\n" +
                 destination.getAddress() + "\n" +
                 String.format("%s, %s, %05d\n", destination.getCity(), destination.getState(), destination.getZipCode()) +
-                String.format("Weight:\t%.2f\n", weight) +
-                String.format("Price:\t$%.2f\n", price) +
+                String.format("Weight:\t\t %.2f\n", weight) +
+                String.format("Price:\t\t$%.2f\n", price) +
                 "Product: " + product + "\n" +
                 "====================\n";
     }
