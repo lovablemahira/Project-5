@@ -181,49 +181,8 @@ public class DatabaseManager {
             System.out.println("There was an error reading from your prime day file");
         }
         return prime;
-    }
-
-    
-    
-    
-    
-    /**
-     * Saves (writes) vehicles from ArrayList of vehicles to file in CSV format one vehicle per line.
-     * Each line (vehicle) has following fields separated by comma in the same order.
-     * <ol>
-     * <li>Vehicle Type (Truck/Drone/Cargo Plane)</li>
-     * <li>Vehicle License Plate</li>
-     * <li>Maximum Carry Weight</li>
-     * </ol>
-     * 
-     * @param file     File to write vehicles to
-     * @param vehicles ArrayList of vehicles to save to file
-     */
-    public static void saveVehicles(File file, ArrayList<Vehicle> vehicles) {
-    	//TODO
-    }
-
-    
-    
-    
-    /**
-     * Saves (writes) packages from ArrayList of package to file in CSV format one package per line.
-     * Each line (package) has following fields separated by comma in the same order.
-     * <ol>
-     * <li>ID</li>
-     * <li>Product Name</li>
-     * <li>Weight</li>
-     * <li>Price</li>
-     * <li>Address Name</li>
-     * <li>Address</li>
-     * <li>City</li>
-     * <li>State</li>
-     * <li>ZIP Code</li>
-     * </ol>
-
-
-
-
+    }   
+  
 
     /**
      * Saves (writes) vehicles from ArrayList of vehicles to file in CSV format one vehicle per line.
