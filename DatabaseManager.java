@@ -22,8 +22,33 @@ public class DatabaseManager {
      * @return ArrayList of vehicles
      */
     public static ArrayList<Vehicle> loadVehicles(File file) {
-       //TODO
-        return null;
+       FileReader fr;
+       BufferedReader br;
+       String line = "";
+       ArrayList<Vehicle> vroom = new ArrayList<>();
+       try {
+           fr = new FileReader(file);
+           br = new BufferedReader(fr);
+           while ((line = br.readLine()) != null) {
+               String[] data = line.split(",");
+               Vehicle toAdd = null;
+               if (data[0].equalsIgnoreCase("Drone")) {
+                   toAdd = new Drone(data[1], Double.parseDouble(data[2]));
+               } else if (data[0].equalsIgnoreCase("Truck")) {
+                   toAdd = new Truck(data[1], Double.parseDouble(data[2]));
+               } else if (data[0].equalsIgnoreCase("Cargo Plane")) {
+                   toAdd = new CargoPlane(data[1], Double.parseDouble(data[2]));
+               }
+               vroom.add(toAdd);
+           }
+       } catch (FileNotFoundException x) {
+           return vroom;
+       } catch (IOException y) {
+           System.out.println("There was an error reading your vehicle list file");
+       } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+           System.out.println("Data for vehicle in your vehicle list file was inputted improperly");
+       }
+       return vroom;
     }
 
     
@@ -90,8 +115,19 @@ public class DatabaseManager {
      * @return profits from file
      */
     public static double loadProfit(File file) {
-    	//TODO
-        return 0.0;
+    	FileReader fr;
+    	BufferedReader br;
+    	double profit = 0.0;
+    	try {
+    	    fr = new FileReader(file);
+    	    br = new BufferedReader(fr);
+    	    profit = Double.parseDouble(br.readLine());
+        } catch (FileNotFoundException x) {
+    	    return profit;
+        } catch (IOException | NumberFormatException y) {
+    	    System.out.println("There was an error reading from your profits file");
+        }
+        return profit;
     }
 
     
@@ -106,8 +142,19 @@ public class DatabaseManager {
      * @return number of packages shipped from file
      */
     public static int loadPackagesShipped(File file) {
-    	//TODO
-        return 0;
+    	FileReader fr;
+    	BufferedReader br;
+    	int numPack = 0;
+    	try {
+    	    fr = new FileReader(file);
+    	    br = new BufferedReader(fr);
+    	    numPack = Integer.parseInt(br.readLine());
+        } catch (FileNotFoundException x) {
+    	    return 0;
+        } catch (IOException | NumberFormatException y) {
+    	    System.out.println("There was an error reading from your packages shipped file");
+        }
+        return numPack;
     }
 
     
@@ -121,8 +168,19 @@ public class DatabaseManager {
      * @return whether or not it is prime day
      */
     public static boolean loadPrimeDay(File file) {
-    	//TODO
-        return false;
+        FileReader fr;
+        BufferedReader br;
+        boolean prime = false;
+        try {
+            fr = new FileReader(file);
+            br = new BufferedReader(fr);
+            prime = Integer.parseInt(br.readLine()) == 1;
+        } catch (FileNotFoundException x) {
+            return prime;
+        } catch (IOException | NumberFormatException y) {
+            System.out.println("There was an error reading from your prime day file");
+        }
+        return prime;
     }
 
     
