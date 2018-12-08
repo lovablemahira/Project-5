@@ -220,57 +220,157 @@ public class DatabaseManager {
      * <li>State</li>
      * <li>ZIP Code</li>
      * </ol>
-     * 
+
+
+
+
+
+    /**
+     * Saves (writes) vehicles from ArrayList of vehicles to file in CSV format one vehicle per line.
+     * Each line (vehicle) has following fields separated by comma in the same order.
+     * <ol>
+     * <li>Vehicle Type (Truck/Drone/Cargo Plane)</li>
+     * <li>Vehicle License Plate</li>
+     * <li>Maximum Carry Weight</li>
+     * </ol>
+     *
+     * @param file     File to write vehicles to
+     * @param vehicles ArrayList of vehicles to save to file
+     */
+    public static void saveVehicles(File file, ArrayList<Vehicle> vehicles) {
+        PrintWriter pW;
+
+        try {
+            pW = new PrintWriter(file);
+            for (int i = 0; i < vehicles.size(); i++) {
+                if (vehicles.get(i).report().contains("Truck")) {
+                    pW.write("Truck");
+                } else if (vehicles.get(i).report().contains("Drone")) {
+                    pW.write("Drone");
+                } else {
+                    pW.write("Cargo Plane");
+                }
+                pW.write((vehicles.get(i)).getLicensePlate() + ",");
+                pW.write((vehicles.get(i)).getMaxWeight() + ",");
+                pW.write("/n");
+            }
+            pW.close();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("We couldn't find the given file.");
+        }
+    }
+
+
+
+
+    /**
+     * Saves (writes) packages from ArrayList of package to file in CSV format one package per line.
+     * Each line (package) has following fields separated by comma in the same order.
+     * <ol>
+     * <li>ID</li>
+     * <li>Product Name</li>
+     * <li>Weight</li>
+     * <li>Price</li>
+     * <li>Address Name</li>
+     * <li>Address</li>
+     * <li>City</li>
+     * <li>State</li>
+     * <li>ZIP Code</li>
+     * </ol>
+     *
      * @param file     File to write packages to
      * @param packages ArrayList of packages to save to file
      */
     public static void savePackages(File file, ArrayList<Package> packages) {
-    	//TODO
+        PrintWriter pW;
+
+        try {
+            pW = new PrintWriter(file);
+            for (int i = 0; i < packages.size(); i++) {
+                pW.write((packages.get(i)).getID() + ",");
+                pW.write((packages.get(i)).getProduct() + ",");
+                pW.write((packages.get(i)).getWeight() + ",");
+                pW.write((packages.get(i)).getPrice() + ",");
+                pW.write(((packages.get(i)).getDestination()).getName() + ",");
+                pW.write(((packages.get(i)).getDestination()).getAddress() + ",");
+                pW.write(((packages.get(i)).getDestination()).getCity() + ",");
+                pW.write(((packages.get(i)).getDestination()).getState() + ",");
+                pW.write(((packages.get(i)).getDestination()).getZipCode() + ",");
+                pW.write("/n");
+            }
+            pW.close();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("We couldn't find the given file.");
+        }
     }
 
-    
-    
-    
+
+
+
     /**
      * Saves profit to text file.
-     * 
+     *
      * @param file   File to write profits to
      * @param profit Total profits
      */
 
     public static void saveProfit(File file, double profit) {
-    	//TODO
+        PrintWriter pW;
+
+        try {
+            pW = new PrintWriter(file);
+            pW.write(Double.toString(profit));
+            pW.close();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("We couldn't find the given file.");
+        }
     }
 
-    
-    
-    
-    
+
+
+
+
     /**
      * Saves number of packages shipped to text file.
-     * 
+     *
      * @param file      File to write profits to
      * @param nPackages Number of packages shipped
      */
 
     public static void savePackagesShipped(File file, int nPackages) {
-    	//TODO
+        PrintWriter pW;
+
+        try {
+            pW = new PrintWriter(file);
+            pW.write(Double.toString(nPackages));
+            pW.close();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("We couldn't find the given file.");
+        }
     }
 
-    
-    
-    
-    
-    
+
+
+
+
+
     /**
      * Saves status of prime day to text file. If it is primeDay "1" will be
      * writtern, otherwise "0" will be written.
-     * 
+     *
      * @param file     File to write profits to
      * @param primeDay Whether or not it is Prime Day
      */
 
     public static void savePrimeDay(File file, boolean primeDay) {
-    	//TODO
+        PrintWriter pW;
+
+        try {
+            pW = new PrintWriter(file);
+            pW.write(Boolean.toString(primeDay));
+            pW.close();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("We couldn't find the given file.");
+        }
     }
 }
