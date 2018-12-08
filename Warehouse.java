@@ -35,7 +35,11 @@ public class Warehouse {
     	
     	//1) load data (vehicle, packages, profits, packages shipped and primeday) from files using DatabaseManager
     	
-    	
+    	ArrayList<Package> pAtWarehouse = DatabaseManager.loadPackages(PACKAGE_FILE);
+        ArrayList<Vehicle> vAtWarehouse = DatabaseManager.loadVehicles(VEHICLE_FILE);
+        double profit = DatabaseManager.loadProfit(PROFIT_FILE);
+        int numPackagesShipped = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
+        boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
     	
     	//2) Show menu and handle user inputs
         System.out.println(menu);
