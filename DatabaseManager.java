@@ -301,7 +301,7 @@ public class DatabaseManager {
 
         try {
             pW = new PrintWriter(file);
-            pW.write(Double.toString(nPackages));
+            pW.write(Integer.toString(nPackages));
             pW.close();
         } catch (FileNotFoundException fnfe) {
             System.out.println("We couldn't find the given file.");
@@ -326,7 +326,11 @@ public class DatabaseManager {
 
         try {
             pW = new PrintWriter(file);
-            pW.write(Boolean.toString(primeDay));
+            if (primeDay == true) {
+                pW.write("1");
+            } else {
+                pW.write("0");
+            }
             pW.close();
         } catch (FileNotFoundException fnfe) {
             System.out.println("We couldn't find the given file.");
