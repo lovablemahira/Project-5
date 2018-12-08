@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 
 public class Warehouse {
-	final static String folderPath = "files/";
+    final static String folderPath = "files/";
     final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
     final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
     final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
@@ -15,33 +15,42 @@ public class Warehouse {
     final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
     final static double PRIME_DAY_DISCOUNT = .15;
     static String menu = "==========Options==========" +
-                    "\n1) Add Package" +
-                    "\n2) Add Vehicle" +
-                    "\n3) Activate Prime Day" +
-                    "\n4) Send Vehicle" +
-                    "\n5) Print Statistics" +
-                    "\n6) Exit" +
-                    "\n===========================";
+            "\n1) Add Package" +
+            "\n2) Add Vehicle" +
+            "\n3) Activate Prime Day" +
+            "\n4) Send Vehicle" +
+            "\n5) Print Statistics" +
+            "\n6) Exit" +
+            "\n===========================";
+
+    public static void printStatisticsReport(double profits, int packagesShipped, int numberOfPackages) {
+        System.out.println("==========Statistics==========");
+        System.out.println("Profits:" + profits);
+        System.out.println("Packages Shipped:" + packagesShipped);
+        System.out.println("Packages in Warehouse:" + numberOfPackages);
+        System.out.println("==============================");
+    }
+
 
     /**
      * Main Method
-     * 
+     *
      * @param args list of command line arguements
      */
     public static void main(String[] args) {
         //Variables\\
         Scanner userInput = new Scanner(System.in);
-    	//TODO
-    	
-    	//1) load data (vehicle, packages, profits, packages shipped and primeday) from files using DatabaseManager
-    	
-    	ArrayList<Package> pAtWarehouse = DatabaseManager.loadPackages(PACKAGE_FILE);
+        //TODO
+
+        //1) load data (vehicle, packages, profits, packages shipped and primeday) from files using DatabaseManager
+
+        ArrayList<Package> pAtWarehouse = DatabaseManager.loadPackages(PACKAGE_FILE);
         ArrayList<Vehicle> vAtWarehouse = DatabaseManager.loadVehicles(VEHICLE_FILE);
         double profit = DatabaseManager.loadProfit(PROFIT_FILE);
         int numPackagesShipped = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
         boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
-    	
-    	//2) Show menu and handle user inputs
+
+        //2) Show menu and handle user inputs
         System.out.println(menu);
         String selection = userInput.nextLine();
 
@@ -61,7 +70,7 @@ public class Warehouse {
 
                     //Code\\
                     System.out.println("Enter Package ID:");
-                    id  = userInput.nextLine();
+                    id = userInput.nextLine();
                     System.out.println("Enter Product Name:");
                     name = userInput.nextLine();
                     //---------------------------------May have to handle errors
@@ -116,13 +125,13 @@ public class Warehouse {
                     break;
                 case "3":
                     if (menu == ("==========Options==========" +
-                        "\n1) Add Package" +
-                        "\n2) Add Vehicle" +
-                        "\n3) Deactivate Prime Day" +
-                        "\n4) Send Vehicle" +
-                        "\n5) Print Statistics" +
-                        "\n6) Exit" +
-                        "\n===========================")) {
+                            "\n1) Add Package" +
+                            "\n2) Add Vehicle" +
+                            "\n3) Deactivate Prime Day" +
+                            "\n4) Send Vehicle" +
+                            "\n5) Print Statistics" +
+                            "\n6) Exit" +
+                            "\n===========================")) {
                         menu = "==========Options==========" +
                                 "\n1) Add Package" +
                                 "\n2) Add Vehicle" +
@@ -207,19 +216,16 @@ public class Warehouse {
                     }
                     break;
                 case "5":
-                    System.out.println("==========Statistics==========");
-                    System.out.println("Profits:");
-                    System.out.println("Packages Shipped:");
-                    System.out.println("Packages in Warehouse:");
-                    System.out.println("==============================");
+                    //FORMAT CORRECTLY
+                    printStatisticsReport(profit, numPackagesShipped, pAtWarehouse.size());
                     break;
                 case "6":
                     DatabaseManager dbm = new DatabaseManager();
-
-//                    dbm.saveVehicles();
-//                    dbm.saveProfit();
-//                    dbm.savePackagesShipped();
-//                    dbm.savePrimeDay();
+                    dbm.savePackages(PACKAGE_FILE, pAtWarehouse);
+                    dbm.saveVehicles(VEHICLE_FILE, vAtWarehouse);
+                    dbm.saveProfit(PROFIT_FILE, profit);
+                    dbm.savePackagesShipped(N_PACKAGES_FILE, numPackagesShipped);
+                    dbm.savePrimeDay(PRIME_DAY_FILE, primeDay);
                     return;
                 default:
                     System.out.println("Error: Option not available.");
@@ -228,11 +234,5 @@ public class Warehouse {
             System.out.println(menu);
             selection = userInput.nextLine();
         }
-
-        //3) save data (vehicle, packages, profits, packages shipped and primeday) to files (overwriting them) using DatabaseManager
-    	
-    
     }
-
-
 }
