@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +23,7 @@ public class DatabaseManager {
      */
     public static ArrayList<Vehicle> loadVehicles(File file) {
        //TODO
+        return null;
     }
 
     
@@ -56,13 +54,27 @@ public class DatabaseManager {
         FileReader fr;
         BufferedReader br;
         String line = "";
+        ArrayList<Package> packingPeanuts = new ArrayList<>();
         try {
             fr = new FileReader(file);
             br = new BufferedReader(fr);
+            while ((line = br.readLine()) != null) {
+                String[] information = line.split(",");
+                ShippingAddress toWhere = new ShippingAddress(information[4], information[5],
+                        information[6], information[7], Integer.parseInt(information[8]));
+                Package packToAdd = new Package(information[0], information[1],
+                        Double.parseDouble(information[2]), Double.parseDouble(information[3]),
+                        toWhere);
+                packingPeanuts.add(packToAdd);
+            }
         } catch (FileNotFoundException x) {
-            System.out.println("Sorry, filepath with filename " + file.toString() + " could not be found");
+            return packingPeanuts;
+        } catch (IOException y) {
+            System.out.println("Sorry, there was an error reading from your package list file");
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println("Data for package in your package list file was inputted improperly");
         }
-
+        return packingPeanuts;
     }
     
     
@@ -79,6 +91,7 @@ public class DatabaseManager {
      */
     public static double loadProfit(File file) {
     	//TODO
+        return 0.0;
     }
 
     
@@ -94,6 +107,7 @@ public class DatabaseManager {
      */
     public static int loadPackagesShipped(File file) {
     	//TODO
+        return 0;
     }
 
     
@@ -108,6 +122,7 @@ public class DatabaseManager {
      */
     public static boolean loadPrimeDay(File file) {
     	//TODO
+        return false;
     }
 
     
