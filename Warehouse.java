@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -96,10 +97,13 @@ public class Warehouse {
 
                     switch (vehicle) {
                         case "1":
+                            Vehicle truck = new Truck(license, maxWeight);
                             break;
                         case "2":
+                            Vehicle drone = new Drone(license, maxWeight);
                             break;
                         case "3":
+                            Vehicle plane = new CargoPlane(license, maxWeight);
                             break;
                         default:
                             //---------------------------------May have to handle errors
@@ -206,12 +210,12 @@ public class Warehouse {
                     System.out.println("==============================");
                     break;
                 case "6":
-                    DatabaseManager dm = new DatabaseManager();
-//                    dm.savePackages();
-//                    dm.saveVehicles();
-//                    dm.saveProfit();
-//                    dm.savePackagesShipped();
-//                    dm.savePrimeDay();
+                    DatabaseManager dbm = new DatabaseManager();
+
+//                    dbm.saveVehicles();
+//                    dbm.saveProfit();
+//                    dbm.savePackagesShipped();
+//                    dbm.savePrimeDay();
                     return;
                 default:
                     System.out.println("Error: Option not available.");
