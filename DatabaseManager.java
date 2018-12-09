@@ -225,7 +225,7 @@ public class DatabaseManager {
                 }
                 pW.write((vehicles.get(i)).getLicensePlate() + ",");
                 pW.write((vehicles.get(i)).getMaxWeight() + ",");
-                pW.write("/n");
+                pW.write("\n");
             }
             pW.close();
         } catch (FileNotFoundException fnfe) {
@@ -269,7 +269,7 @@ public class DatabaseManager {
                 pW.write(((packages.get(i)).getDestination()).getCity() + ",");
                 pW.write(((packages.get(i)).getDestination()).getState() + ",");
                 pW.write(((packages.get(i)).getDestination()).getZipCode() + ",");
-                pW.write("/n");
+                pW.write("\n");
             }
             pW.close();
         } catch (FileNotFoundException fnfe) {
