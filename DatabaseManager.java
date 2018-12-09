@@ -224,7 +224,7 @@ public class DatabaseManager {
                     pW.write("Cargo Plane,");
                 }
                 pW.write((vehicles.get(i)).getLicensePlate() + ",");
-                pW.write((vehicles.get(i)).getMaxWeight() + ",");
+                pW.write((vehicles.get(i)).getMaxWeight() + "");
                 pW.write("\n");
             }
             pW.close();

@@ -53,7 +53,7 @@ public class Truck extends Vehicle {
         for (Package pkg : getPackages()) {
             revenue += pkg.getPrice();
         }
-        return revenue - (getRange() + 1) * this.gasRate;
+        return revenue - (getRange() - 1) * this.gasRate;
     }
 
     /**

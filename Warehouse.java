@@ -1,4 +1,5 @@
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,9 +33,16 @@ public class Warehouse {
 
     public static void printStatisticsReport(double profits, int packagesShipped, int numberOfPackages) {
         int length = (Double.toString(profits)).length();
-        int padding = 20 - (length - 3);
+        int numCommas;
+        if ((length - 2) % 3 == 0) {
+            numCommas = ((length - 2) / 3) - 1;
+        } else {
+            numCommas = ((length - 2) / 3);
+        }
+        int padding = 20 - ((length - 3) + numCommas);
+        NumberFormat format = NumberFormat.getCurrencyInstance();
         System.out.println("==========Statistics==========");
-        System.out.printf("Profits:%-" + padding + "s$%.2f%n", "", profits);
+        System.out.printf("Profits:%-" + padding + "s" + format.format(profits) + "\n", "");
         System.out.printf("Packages Shipped:%16d\n", packagesShipped);
         System.out.printf("Packages in Warehouse:%11d\n", numberOfPackages);
         System.out.println("==============================");
@@ -193,7 +201,6 @@ public class Warehouse {
                     }
                     int frequentZIP = 0;
                     int occurences = 0;
-                    int[] occurencesArray = new int[pAtWarehouse.size()];
                     System.out.println("Options:");
                     System.out.println("1) Send Truck");
                     System.out.println("2) Send Drone");
@@ -202,6 +209,7 @@ public class Warehouse {
                     String sendVehicle = userInput.nextLine();
                     String zipcodeOption;
                     int originalPackageSize = pAtWarehouse.size();
+                    ArrayList<Integer> uniqueZips = new ArrayList<>();
 
                     switch (sendVehicle) {
                         case "1":
@@ -233,10 +241,18 @@ public class Warehouse {
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        if (!uniqueZips.contains((Integer) pAtWarehouse
+                                            .get(i).getDestination().getZipCode())) {
+                                            uniqueZips.add(pAtWarehouse.get(i)
+                                                .getDestination().getZipCode());
+                                        }
+                                    }
+                                    int[] occurencesArray = new int[uniqueZips.size()];
+                                    for (int i = 0; i < uniqueZips.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
-                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (uniqueZips.get(i) == pAtWarehouse
+                                                    .get(j).getDestination().getZipCode()) {
                                                 occurences++;
                                             }
                                         }
@@ -247,7 +263,8 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    vAtWarehouse.get(firstTruckIndex).setZipDest(frequentZIP);
+                                    vAtWarehouse.get(firstTruckIndex).setZipDest(uniqueZips.get(frequentZIP));
+                                    uniqueZips.clear();
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
@@ -287,10 +304,18 @@ public class Warehouse {
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        if (!uniqueZips.contains((Integer) pAtWarehouse
+                                                .get(i).getDestination().getZipCode())) {
+                                            uniqueZips.add(pAtWarehouse.get(i)
+                                                    .getDestination().getZipCode());
+                                        }
+                                    }
+                                    int[] occurencesArray = new int[uniqueZips.size()];
+                                    for (int i = 0; i < uniqueZips.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
-                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (uniqueZips.get(i) == pAtWarehouse
+                                                    .get(j).getDestination().getZipCode()) {
                                                 occurences++;
                                             }
                                         }
@@ -301,7 +326,8 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    vAtWarehouse.get(firstDroneIndex).setZipDest(frequentZIP);
+                                    vAtWarehouse.get(firstDroneIndex).setZipDest(uniqueZips.get(frequentZIP));
+                                    uniqueZips.clear();
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
@@ -341,10 +367,18 @@ public class Warehouse {
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        if (!uniqueZips.contains((Integer) pAtWarehouse
+                                                .get(i).getDestination().getZipCode())) {
+                                            uniqueZips.add(pAtWarehouse.get(i)
+                                                    .getDestination().getZipCode());
+                                        }
+                                    }
+                                    int[] occurencesArray = new int[uniqueZips.size()];
+                                    for (int i = 0; i < uniqueZips.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
-                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (uniqueZips.get(i) == pAtWarehouse
+                                                    .get(j).getDestination().getZipCode()) {
                                                 occurences++;
                                             }
                                         }
@@ -355,7 +389,8 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    vAtWarehouse.get(firstPlaneIndex).setZipDest(frequentZIP);
+                                    vAtWarehouse.get(firstPlaneIndex).setZipDest(uniqueZips.get(frequentZIP));
+                                    uniqueZips.clear();
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
@@ -380,10 +415,18 @@ public class Warehouse {
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        if (!uniqueZips.contains((Integer) pAtWarehouse
+                                                .get(i).getDestination().getZipCode())) {
+                                            uniqueZips.add(pAtWarehouse.get(i)
+                                                    .getDestination().getZipCode());
+                                        }
+                                    }
+                                    int[] occurencesArray = new int[uniqueZips.size()];
+                                    for (int i = 0; i < uniqueZips.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
-                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (uniqueZips.get(i) == pAtWarehouse
+                                                    .get(j).getDestination().getZipCode()) {
                                                 occurences++;
                                             }
                                         }
@@ -394,7 +437,8 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    vAtWarehouse.get(0).setZipDest(frequentZIP);
+                                    vAtWarehouse.get(0).setZipDest(uniqueZips.get(frequentZIP));
+                                    uniqueZips.clear();
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
