@@ -24,10 +24,13 @@ public class Warehouse {
             "\n===========================";
 
     public static void printStatisticsReport(double profits, int packagesShipped, int numberOfPackages) {
+        int length = (Double.toString(profits)).length();
+        int padding = 20 - (length - 3);
+        System.out.println(padding);
         System.out.println("==========Statistics==========");
-        System.out.println("Profits:" + profits);
-        System.out.println("Packages Shipped:" + packagesShipped);
-        System.out.println("Packages in Warehouse:" + numberOfPackages);
+        System.out.printf("Profits:%-" + padding + "s$%.2f%n", "", profits);
+        System.out.printf("Packages Shipped:%16d\n", packagesShipped);
+        System.out.printf("Packages in Warehouse:%11d\n", numberOfPackages);
         System.out.println("==============================");
     }
 
@@ -78,6 +81,9 @@ public class Warehouse {
                     weight = userInput.nextDouble();
                     System.out.println("Enter Price:");
                     price = userInput.nextDouble();
+                    if (primeDay == true) {
+                        price = price - (price * 0.15);
+                    }
                     System.out.println("Enter Buyer Name:");
                     userInput.nextLine();
                     buyerName = userInput.nextLine();
@@ -111,12 +117,15 @@ public class Warehouse {
                     switch (vehicle) {
                         case "1":
                             Vehicle truck = new Truck(license, maxWeight);
+                            vAtWarehouse.add(truck);
                             break;
                         case "2":
                             Vehicle drone = new Drone(license, maxWeight);
+                            vAtWarehouse.add(drone);
                             break;
                         case "3":
                             Vehicle plane = new CargoPlane(license, maxWeight);
+                            vAtWarehouse.add(plane);
                             break;
                         default:
                             //---------------------------------May have to handle errors
@@ -124,7 +133,8 @@ public class Warehouse {
                     }
                     break;
                 case "3":
-                    if (menu == ("==========Options==========" +
+                    double newPrice;
+                    if (menu.equals("==========Options==========" +
                             "\n1) Add Package" +
                             "\n2) Add Vehicle" +
                             "\n3) Deactivate Prime Day" +
@@ -140,6 +150,11 @@ public class Warehouse {
                                 "\n5) Print Statistics" +
                                 "\n6) Exit" +
                                 "\n===========================";
+                        primeDay = false;
+                        for (int i = 0; i < pAtWarehouse.size(); i++) {
+                            newPrice = (pAtWarehouse.get(i)).getPrice();
+                            (pAtWarehouse.get(i)).setPrice(newPrice / 0.85);
+                        }
                     } else {
                         menu = "==========Options==========" +
                                 "\n1) Add Package" +
@@ -149,6 +164,12 @@ public class Warehouse {
                                 "\n5) Print Statistics" +
                                 "\n6) Exit" +
                                 "\n===========================";
+                        primeDay = true;
+                        for (int i = 0; i < pAtWarehouse.size(); i++) {
+                            newPrice = (pAtWarehouse.get(i)).getPrice();
+                            (pAtWarehouse.get(i)).setPrice(newPrice * 0.85);
+                        }
+
                     }
                     //---------------------------------NOT DONE, NEED TO UPDATE ALL PRICES
                     break;
@@ -163,6 +184,10 @@ public class Warehouse {
 
                     switch (sendVehicle) {
                         case "1":
+                            int frequentZIP = 0;
+                            int occurences = 0;
+                            int[] occurencesArray = new int[pAtWarehouse.size()];
+
                             System.out.println("ZIP Code Options:");
                             System.out.println("1) Send to first ZIP Code");
                             System.out.println("2) Send to mode of ZIP Codes");
@@ -172,6 +197,21 @@ public class Warehouse {
                                 case "1":
                                     break;
                                 case "2":
+                                    for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        occurences = 0;
+                                        for (int j = 0; j < pAtWarehouse.size(); j++) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                                occurences++;
+                                            }
+                                        }
+                                        occurencesArray[i] = occurences;
+                                    }
+                                    for (int i = 0; i < occurencesArray.length - 1; i++) {
+                                        if (occurencesArray[i] < occurencesArray[i + 1]) {
+                                            frequentZIP = i + 1;
+                                        }
+                                    }
+                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
@@ -188,6 +228,21 @@ public class Warehouse {
                                 case "1":
                                     break;
                                 case "2":
+                                    for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        occurences = 0;
+                                        for (int j = 0; j < pAtWarehouse.size(); j++) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                                occurences++;
+                                            }
+                                        }
+                                        occurencesArray[i] = occurences;
+                                    }
+                                    for (int i = 0; i < occurencesArray.length - 1; i++) {
+                                        if (occurencesArray[i] < occurencesArray[i + 1]) {
+                                            frequentZIP = i + 1;
+                                        }
+                                    }
+                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
@@ -202,8 +257,55 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
+
                                     break;
                                 case "2":
+                                    for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        occurences = 0;
+                                        for (int j = 0; j < pAtWarehouse.size(); j++) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                                occurences++;
+                                            }
+                                        }
+                                        occurencesArray[i] = occurences;
+                                    }
+                                    for (int i = 0; i < occurencesArray.length - 1; i++) {
+                                        if (occurencesArray[i] < occurencesArray[i + 1]) {
+                                            frequentZIP = i + 1;
+                                        }
+                                    }
+                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
+                                    break;
+                                default:
+                                    System.out.println("Sorry, that's not an option.");
+                                    break;
+                            }
+                            break;
+                        case "4":
+                            System.out.println("ZIP Code Options:");
+                            System.out.println("1) Send to first ZIP Code");
+                            System.out.println("2) Send to mode of ZIP Codes");
+                            zipcodeOption = userInput.nextLine();
+
+                            switch (zipcodeOption) {
+                                case "1":
+                                    break;
+                                case "2":
+                                    for (int i = 0; i < pAtWarehouse.size(); i++) {
+                                        occurences = 0;
+                                        for (int j = 0; j < pAtWarehouse.size(); j++) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                                occurences++;
+                                            }
+                                        }
+                                        occurencesArray[i] = occurences;
+                                    }
+                                    for (int i = 0; i < occurencesArray.length - 1; i++) {
+                                        if (occurencesArray[i] < occurencesArray[i + 1]) {
+                                            frequentZIP = i + 1;
+                                        }
+                                    }
+                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
@@ -216,7 +318,6 @@ public class Warehouse {
                     }
                     break;
                 case "5":
-                    //FORMAT CORRECTLY
                     printStatisticsReport(profit, numPackagesShipped, pAtWarehouse.size());
                     break;
                 case "6":
