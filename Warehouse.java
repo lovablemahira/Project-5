@@ -52,6 +52,7 @@ public class Warehouse {
         double profit = DatabaseManager.loadProfit(PROFIT_FILE);
         int numPackagesShipped = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
         boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
+        ArrayList<Vehicle> vOnDelivery = new ArrayList<>();
 
         //2) Show menu and handle user inputs
         System.out.println(menu);
@@ -82,7 +83,7 @@ public class Warehouse {
                     System.out.println("Enter Price:");
                     price = userInput.nextDouble();
                     if (primeDay == true) {
-                        price = price - (price * 0.15);
+                        price = price - (price * PRIME_DAY_DISCOUNT);
                     }
                     System.out.println("Enter Buyer Name:");
                     userInput.nextLine();
