@@ -217,11 +217,11 @@ public class DatabaseManager {
             pW = new PrintWriter(file);
             for (int i = 0; i < vehicles.size(); i++) {
                 if (vehicles.get(i) instanceof Truck) {
-                    pW.write("Truck");
+                    pW.write("Truck,");
                 } else if (vehicles.get(i) instanceof Drone) {
-                    pW.write("Drone");
+                    pW.write("Drone,");
                 } else {
-                    pW.write("Cargo Plane");
+                    pW.write("Cargo Plane,");
                 }
                 pW.write((vehicles.get(i)).getLicensePlate() + ",");
                 pW.write((vehicles.get(i)).getMaxWeight() + ",");
@@ -268,7 +268,7 @@ public class DatabaseManager {
                 pW.write(((packages.get(i)).getDestination()).getAddress() + ",");
                 pW.write(((packages.get(i)).getDestination()).getCity() + ",");
                 pW.write(((packages.get(i)).getDestination()).getState() + ",");
-                pW.write(((packages.get(i)).getDestination()).getZipCode() + ",");
+                pW.write(((packages.get(i)).getDestination()).getZipCode() + "");
                 pW.write("\n");
             }
             pW.close();

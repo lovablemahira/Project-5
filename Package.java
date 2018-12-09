@@ -1,3 +1,4 @@
+import java.text.NumberFormat;
 /**
  * <h1>Package</h1> Represents a package
  *
@@ -11,6 +12,7 @@ public class Package {
     private double weight;
     private double price;
     private ShippingAddress destination;
+    NumberFormat format = NumberFormat.getCurrencyInstance();
 
     /**
      * Default Constructor
@@ -169,8 +171,8 @@ public class Package {
                 String.format("%s, %s, %05d\n", destination.getCity(),
                         destination.getState(), destination.getZipCode()) +
                 String.format("Weight:\t\t %.2f\n", weight) +
-                String.format("Price:\t\t$%.2f\n", price) +
-                "Product: " + product + "\n" +
+                "Price:\t\t" + format.format(price) + "\n" +
+                "Product:" + product + "\n" +
                 "====================\n";
     }
 

@@ -33,7 +33,6 @@ public class Warehouse {
     public static void printStatisticsReport(double profits, int packagesShipped, int numberOfPackages) {
         int length = (Double.toString(profits)).length();
         int padding = 20 - (length - 3);
-        System.out.println(padding);
         System.out.println("==========Statistics==========");
         System.out.printf("Profits:%-" + padding + "s$%.2f%n", "", profits);
         System.out.printf("Packages Shipped:%16d\n", packagesShipped);
@@ -107,6 +106,7 @@ public class Warehouse {
                     Package boxPackage = new Package(id, name, weight, price, shippingAddress);
                     String label = boxPackage.shippingLabel();
                     System.out.println(label);
+                    pAtWarehouse.add(boxPackage);
                     break;
                 case "2":
                     System.out.println("Vehicle Options:");
@@ -254,7 +254,7 @@ public class Warehouse {
                                     break;
                             }
                             vAtWarehouse.get(firstTruckIndex).fill(pAtWarehouse);
-                            vAtWarehouse.get(firstTruckIndex).report();
+                            System.out.println(vAtWarehouse.get(firstTruckIndex).report());
                             profit += vAtWarehouse.get(firstTruckIndex).getProfit();
                             numPackagesShipped += originalPackageSize - pAtWarehouse.size();
                             vOnDelivery.add(vAtWarehouse.remove(firstTruckIndex));
@@ -308,7 +308,7 @@ public class Warehouse {
                                     break;
                             }
                             vAtWarehouse.get(firstDroneIndex).fill(pAtWarehouse);
-                            vAtWarehouse.get(firstDroneIndex).report();
+                            System.out.println(vAtWarehouse.get(firstDroneIndex).report());
                             profit += vAtWarehouse.get(firstDroneIndex).getProfit();
                             numPackagesShipped += originalPackageSize - pAtWarehouse.size();
                             vOnDelivery.add(vAtWarehouse.remove(firstDroneIndex));
@@ -362,7 +362,7 @@ public class Warehouse {
                                     break;
                             }
                             vAtWarehouse.get(firstPlaneIndex).fill(pAtWarehouse);
-                            vAtWarehouse.get(firstPlaneIndex).report();
+                            System.out.println(vAtWarehouse.get(firstPlaneIndex).report());
                             profit += vAtWarehouse.get(firstPlaneIndex).getProfit();
                             numPackagesShipped += originalPackageSize - pAtWarehouse.size();
                             vOnDelivery.add(vAtWarehouse.remove(firstPlaneIndex));
@@ -401,7 +401,7 @@ public class Warehouse {
                                     break;
                             }
                             vAtWarehouse.get(0).fill(pAtWarehouse);
-                            vAtWarehouse.get(0).report();
+                            System.out.println(vAtWarehouse.get(0).report());
                             profit += vAtWarehouse.get(0).getProfit();
                             numPackagesShipped += originalPackageSize - pAtWarehouse.size();
                             vOnDelivery.add(vAtWarehouse.remove(0));
@@ -415,12 +415,11 @@ public class Warehouse {
                     printStatisticsReport(profit, numPackagesShipped, pAtWarehouse.size());
                     break;
                 case "6":
-                    DatabaseManager dbm = new DatabaseManager();
-                    dbm.savePackages(PACKAGE_FILE, pAtWarehouse);
-                    dbm.saveVehicles(VEHICLE_FILE, vAtWarehouse);
-                    dbm.saveProfit(PROFIT_FILE, profit);
-                    dbm.savePackagesShipped(N_PACKAGES_FILE, numPackagesShipped);
-                    dbm.savePrimeDay(PRIME_DAY_FILE, primeDay);
+                    DatabaseManager.savePackages(PACKAGE_FILE, pAtWarehouse);
+                    DatabaseManager.saveVehicles(VEHICLE_FILE, vAtWarehouse);
+                    DatabaseManager.saveProfit(PROFIT_FILE, profit);
+                    DatabaseManager.savePackagesShipped(N_PACKAGES_FILE, numPackagesShipped);
+                    DatabaseManager.savePrimeDay(PRIME_DAY_FILE, primeDay);
                     return;
                 default:
                     System.out.println("Error: Option not available.");
