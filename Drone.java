@@ -53,7 +53,7 @@ public class Drone extends Vehicle {
         for (Package pkg : getPackages()) {
             revenue += pkg.getPrice();
         }
-        return revenue - getRange() * gasRate;
+        return revenue - getRange() * this.gasRate;
     }
 
     /**

@@ -87,7 +87,7 @@ public class CargoPlane extends Vehicle {
         for (Package pkg : getPackages()) {
             revenue += pkg.getPrice();
         }
-        return revenue - range * gasRate;
+        return revenue - range * this.gasRate;
     }
 
     /**
