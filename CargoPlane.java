@@ -3,9 +3,13 @@ import java.util.ArrayList;
 
 /**
  * <h1>CargoPlane</h1> Represents a Cargo Plane
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
  */
 public class CargoPlane extends Vehicle {
-    final double GAS_RATE = 2.33;
+    final double gasRate = 2.33;
     private int range = 0;
 
     /**
@@ -83,7 +87,7 @@ public class CargoPlane extends Vehicle {
         for (Package pkg : getPackages()) {
             revenue += pkg.getPrice();
         }
-        return revenue - range * GAS_RATE;
+        return revenue - range * gasRate;
     }
 
     /**

@@ -2,11 +2,15 @@ import java.util.ArrayList;
 
 /**
  * <h1>Drone</h1> Represents a Drone
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
  */
 
 public class Drone extends Vehicle {
 
-    final private double GAS_RATE = 1.33;
+    final private double gasRate = 1.33;
     /**
      * Default Contructor 
      */
@@ -49,7 +53,7 @@ public class Drone extends Vehicle {
         for (Package pkg : getPackages()) {
             revenue += pkg.getPrice();
         }
-        return revenue - getRange() * GAS_RATE;
+        return revenue - getRange() * gasRate;
     }
 
     /**

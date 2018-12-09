@@ -1,5 +1,9 @@
 /**
  * <h1>Package</h1> Represents a package
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
  */
 public class Package {
     private String id;
@@ -162,7 +166,8 @@ public class Package {
         return "====================\n" +
                 "TO: " + destination.getName() + "\n" +
                 destination.getAddress() + "\n" +
-                String.format("%s, %s, %05d\n", destination.getCity(), destination.getState(), destination.getZipCode()) +
+                String.format("%s, %s, %05d\n", destination.getCity(),
+                        destination.getState(), destination.getZipCode()) +
                 String.format("Weight:\t\t %.2f\n", weight) +
                 String.format("Price:\t\t$%.2f\n", price) +
                 "Product: " + product + "\n" +

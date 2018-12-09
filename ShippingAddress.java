@@ -1,5 +1,9 @@
 /**
  * <h1>Shipping Address</h1> Represents a shipping address
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
  */
 public class ShippingAddress {
 	private String name;

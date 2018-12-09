@@ -5,6 +5,10 @@ import java.util.ArrayList;
  * <h1>Database Manager</h1>
  *
  * Used to locally save and retrieve data.
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
  */
 public class DatabaseManager {
 

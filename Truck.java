@@ -3,10 +3,14 @@ import java.util.ArrayList;
 
 /**
  * <h1>Truck</h1> Represents a Truck
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
  */
 public class Truck extends Vehicle {
 
-    private final double GAS_RATE = 1.66;
+    private final double gasRate = 1.66;
 
     /**
      * Default Constructor
@@ -26,7 +30,7 @@ public class Truck extends Vehicle {
      */
     //============================================================================
     //
-    public Truck (String licensePlate, double maxWeight) {
+    public Truck(String licensePlate, double maxWeight) {
         super(licensePlate, maxWeight);
     }
     
@@ -49,7 +53,7 @@ public class Truck extends Vehicle {
         for (Package pkg : getPackages()) {
             revenue += pkg.getPrice();
         }
-        return revenue - getRange() * GAS_RATE;
+        return revenue - getRange() * gasRate;
     }
 
     /**

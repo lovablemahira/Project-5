@@ -4,15 +4,22 @@ import java.util.Scanner;
 
 /**
  * <h1>Warehouse</h1>
+ *
+ * The Purpose of this program is to handle an amazon warehouse through user inputs and read in files
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
+ *
  */
 
 public class Warehouse {
-    final static String folderPath = "files/";
-    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
-    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
-    final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
-    final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
-    final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
+    final static String FOLDER_PATH = "files/";
+    final static File VEHICLE_FILE = new File(FOLDER_PATH + "VehicleList.csv");
+    final static File PACKAGE_FILE = new File(FOLDER_PATH + "PackageList.csv");
+    final static File PROFIT_FILE = new File(FOLDER_PATH + "Profit.txt");
+    final static File N_PACKAGES_FILE = new File(FOLDER_PATH + "NumberOfPackages.txt");
+    final static File PRIME_DAY_FILE = new File(FOLDER_PATH + "PrimeDay.txt");
     final static double PRIME_DAY_DISCOUNT = .15;
     static String menu = "==========Options==========" +
             "\n1) Add Package" +
@@ -43,7 +50,6 @@ public class Warehouse {
     public static void main(String[] args) {
         //Variables\\
         Scanner userInput = new Scanner(System.in);
-        //TODO
 
         //1) load data (vehicle, packages, profits, packages shipped and primeday) from files using DatabaseManager
 
@@ -58,7 +64,7 @@ public class Warehouse {
         System.out.println(menu);
         String selection = userInput.nextLine();
 
-        while (selection != "6") {
+        while (!selection.equals("6")) {
             switch (selection) {
                 case "1":
                     //Variables\\
@@ -222,13 +228,15 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
-                                    vAtWarehouse.get(firstTruckIndex).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
+                                    vAtWarehouse.get(firstTruckIndex).setZipDest(pAtWarehouse.get(0)
+                                            .getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
+                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
                                                 occurences++;
                                             }
                                         }
@@ -274,13 +282,15 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
-                                    vAtWarehouse.get(firstDroneIndex).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
+                                    vAtWarehouse.get(firstDroneIndex).setZipDest(pAtWarehouse.get(0)
+                                            .getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
+                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
                                                 occurences++;
                                             }
                                         }
@@ -326,13 +336,15 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
-                                    vAtWarehouse.get(firstPlaneIndex).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
+                                    vAtWarehouse.get(firstPlaneIndex).setZipDest(pAtWarehouse.get(0)
+                                            .getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
+                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
                                                 occurences++;
                                             }
                                         }
@@ -363,13 +375,15 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
-                                    vAtWarehouse.get(0).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
+                                    vAtWarehouse.get(0).setZipDest(pAtWarehouse.get(0)
+                                            .getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
                                         occurences = 0;
                                         for (int j = 0; j < pAtWarehouse.size(); j++) {
-                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode() == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
+                                            if (((pAtWarehouse.get(i)).getDestination()).getZipCode()
+                                                    == ((pAtWarehouse.get(j)).getDestination()).getZipCode()) {
                                                 occurences++;
                                             }
                                         }

@@ -2,6 +2,12 @@ import java.util.ArrayList;
 
 /**
  * <h1>Vehicle</h1> Represents a vehicle
+ *
+ * The purpose of this program is to be a parent for all vehicle types handled by Warehouse
+ *
+ * @author (jacks668, David Jackson), (morri417, Mahira Morris)
+ *
+ * @version 12/9/18
  */
 
 public class Vehicle implements Profitable {
@@ -214,11 +220,7 @@ public class Vehicle implements Profitable {
      * @return whether or not Vehicle is full
      */
     public boolean isFull() {
-        if (currentWeight >= maxWeight) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentWeight >= maxWeight;
     }
 
     
