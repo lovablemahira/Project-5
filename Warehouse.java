@@ -154,7 +154,7 @@ public class Warehouse {
                         primeDay = false;
                         for (int i = 0; i < pAtWarehouse.size(); i++) {
                             newPrice = (pAtWarehouse.get(i)).getPrice();
-                            (pAtWarehouse.get(i)).setPrice(newPrice / 0.85);
+                            (pAtWarehouse.get(i)).setPrice(newPrice / (1 - PRIME_DAY_DISCOUNT));
                         }
                     } else {
                         menu = "==========Options==========" +
@@ -168,13 +168,23 @@ public class Warehouse {
                         primeDay = true;
                         for (int i = 0; i < pAtWarehouse.size(); i++) {
                             newPrice = (pAtWarehouse.get(i)).getPrice();
-                            (pAtWarehouse.get(i)).setPrice(newPrice * 0.85);
+                            (pAtWarehouse.get(i)).setPrice(newPrice * (1 - PRIME_DAY_DISCOUNT));
                         }
 
                     }
                     //---------------------------------NOT DONE, NEED TO UPDATE ALL PRICES
                     break;
                 case "4":
+                    if (vAtWarehouse.size() == 0) {
+                        System.out.println("Error: No vehicles available.");
+                        System.out.println("Error: No packages available.");
+                        break;
+                    }
+
+                    if (pAtWarehouse.size() == 0) {
+                        System.out.println("Error: No packages available.");
+                        break;
+                    }
                     System.out.println("Options:");
                     System.out.println("1) Send Truck");
                     System.out.println("2) Send Drone");
@@ -182,12 +192,28 @@ public class Warehouse {
                     System.out.println("4) Send First Available");
                     String sendVehicle = userInput.nextLine();
                     String zipcodeOption;
+                    int originalPackageSize = pAtWarehouse.size();
 
                     switch (sendVehicle) {
                         case "1":
                             int frequentZIP = 0;
                             int occurences = 0;
                             int[] occurencesArray = new int[pAtWarehouse.size()];
+                            int firstTruckIndex = -1;
+                            boolean trucksPresent = false;
+
+                            for (int i = 0; i < vAtWarehouse.size(); i++) {
+                                if (vAtWarehouse.get(i) instanceof Truck) {
+                                    trucksPresent = true;
+                                    firstTruckIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (!trucksPresent) {
+                                System.out.println("Error: No vehicles of selected type are available.");
+                                break;
+                            }
 
                             System.out.println("ZIP Code Options:");
                             System.out.println("1) Send to first ZIP Code");
@@ -196,6 +222,7 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
+                                    vAtWarehouse.get(firstTruckIndex).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
@@ -212,14 +239,34 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
+                                    vAtWarehouse.get(firstTruckIndex).setZipDest(frequentZIP);
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
                                     break;
                             }
+                            vAtWarehouse.get(firstTruckIndex).fill(pAtWarehouse);
+                            vAtWarehouse.get(firstTruckIndex).report();
+                            profit += vAtWarehouse.get(firstTruckIndex).getProfit();
+                            numPackagesShipped += originalPackageSize - pAtWarehouse.size();
+                            vOnDelivery.add(vAtWarehouse.remove(firstTruckIndex));
                             break;
                         case "2":
+                            int firstDroneIndex = -1;
+                            boolean dronesPresent = false;
+
+                            for (int i = 0; i < vAtWarehouse.size(); i++) {
+                                if (vAtWarehouse.get(i) instanceof Drone) {
+                                    dronesPresent = true;
+                                    firstDroneIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (!dronesPresent) {
+                                System.out.println("Error: No vehicles of selected type are available.");
+                                break;
+                            }
                             System.out.println("ZIP Code Options:");
                             System.out.println("1) Send to first ZIP Code");
                             System.out.println("2) Send to mode of ZIP Codes");
@@ -227,6 +274,7 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
+                                    vAtWarehouse.get(firstDroneIndex).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
@@ -243,14 +291,34 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
+                                    vAtWarehouse.get(firstDroneIndex).setZipDest(frequentZIP);
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
                                     break;
                             }
+                            vAtWarehouse.get(firstDroneIndex).fill(pAtWarehouse);
+                            vAtWarehouse.get(firstDroneIndex).report();
+                            profit += vAtWarehouse.get(firstDroneIndex).getProfit();
+                            numPackagesShipped += originalPackageSize - pAtWarehouse.size();
+                            vOnDelivery.add(vAtWarehouse.remove(firstDroneIndex));
                             break;
                         case "3":
+                            int firstPlaneIndex = -1;
+                            boolean planesPresent = false;
+
+                            for (int i = 0; i < vAtWarehouse.size(); i++) {
+                                if (vAtWarehouse.get(i) instanceof CargoPlane) {
+                                    planesPresent = true;
+                                    firstPlaneIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (!planesPresent) {
+                                System.out.println("Error: No vehicles of selected type are available.");
+                                break;
+                            }
                             System.out.println("ZIP Code Options:");
                             System.out.println("1) Send to first ZIP Code");
                             System.out.println("2) Send to mode of ZIP Codes");
@@ -258,7 +326,7 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
-
+                                    vAtWarehouse.get(firstPlaneIndex).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
@@ -275,12 +343,17 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
+                                    vAtWarehouse.get(firstPlaneIndex).setZipDest(frequentZIP);
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
                                     break;
                             }
+                            vAtWarehouse.get(firstPlaneIndex).fill(pAtWarehouse);
+                            vAtWarehouse.get(firstPlaneIndex).report();
+                            profit += vAtWarehouse.get(firstPlaneIndex).getProfit();
+                            numPackagesShipped += originalPackageSize - pAtWarehouse.size();
+                            vOnDelivery.add(vAtWarehouse.remove(firstPlaneIndex));
                             break;
                         case "4":
                             System.out.println("ZIP Code Options:");
@@ -290,6 +363,7 @@ public class Warehouse {
 
                             switch (zipcodeOption) {
                                 case "1":
+                                    vAtWarehouse.get(0).setZipDest(pAtWarehouse.get(0).getDestination().getZipCode());
                                     break;
                                 case "2":
                                     for (int i = 0; i < pAtWarehouse.size(); i++) {
@@ -306,12 +380,17 @@ public class Warehouse {
                                             frequentZIP = i + 1;
                                         }
                                     }
-                                    ((pAtWarehouse.get(frequentZIP)).getDestination()).getZipCode();
+                                    vAtWarehouse.get(0).setZipDest(frequentZIP);
                                     break;
                                 default:
                                     System.out.println("Sorry, that's not an option.");
                                     break;
                             }
+                            vAtWarehouse.get(0).fill(pAtWarehouse);
+                            vAtWarehouse.get(0).report();
+                            profit += vAtWarehouse.get(0).getProfit();
+                            numPackagesShipped += originalPackageSize - pAtWarehouse.size();
+                            vOnDelivery.add(vAtWarehouse.remove(0));
                             break;
                         default:
                             //---------------------------------May have to handle errors
